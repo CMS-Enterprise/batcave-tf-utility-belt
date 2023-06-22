@@ -9,11 +9,3 @@ variable "bucket_specs" {
   }))
   default = {}
 }
-
-variable "tf_module_source" {
-  type = string
-}
-
-variable "tf_buckets_ref" {
-  type = string
-}
