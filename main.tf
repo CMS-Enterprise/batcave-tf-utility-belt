@@ -18,7 +18,7 @@ locals {
 
 module "bucket" {
   for_each                  = local.all_buckets
-  source                    = "git::git@github.com:CMS-Enterprise/batcave-tf-buckets.git//.?ref=0.4.0"
+  source                    = "git::git@github.com:CMS-Enterprise/batcave-tf-buckets.git//.?ref=0.5.0"
   s3_bucket_names           = [coalesce(each.value.bucket_name_override, "${var.cluster_name}-${each.key}")]
   force_destroy             = each.value.force_destroy
   tags                      = merge(var.tags, try(each.value.tags, {}))
