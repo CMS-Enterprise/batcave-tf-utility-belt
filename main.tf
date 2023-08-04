@@ -8,10 +8,9 @@ locals {
     lifecycle_expiration_days = null
   }
   default_buckets = {
-     gatus  = local.default_parameters
-     loki   = local.default_parameters
-     thanos = local.default_parameters
-     velero = local.default_parameters
+    loki   = local.default_parameters
+    thanos = local.default_parameters
+    velero = local.default_parameters
   }
   all_buckets = merge(local.default_buckets, var.bucket_specs)
 }
