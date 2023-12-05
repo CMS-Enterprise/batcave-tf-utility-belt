@@ -8,9 +8,9 @@ locals {
     lifecycle_expiration_days = null
   }
   default_buckets = {
-    loki   = local.default_parameters
-    thanos = local.default_parameters
-    velero = local.default_parameters
+    loki   = merge(local.default_parameters, {bucket_name_override = "${var.cluster_name}-logs"})
+    thanos = merge(local.default_parameters, {bucket_name_override = "batcave-${var.cluster_name}-thanos"})
+    velero = merge(local.default_parameters, {bucket_name_override = "${var.cluster_name}-batcave-velero-storage"})
   }
   all_buckets = merge(local.default_buckets, var.bucket_specs)
 }
