@@ -12,8 +12,19 @@ locals {
     thanos = merge(local.default_parameters, {bucket_name_override = "batcave-${var.cluster_name}-thanos"})
     velero = merge(local.default_parameters, {bucket_name_override = "${var.cluster_name}-batcave-velero-storage"})
   }
-  all_buckets = merge(local.default_buckets, var.bucket_specs)
+  all_bucket_names = toset(concat(keys(local.default_buckets), keys(var.bucket_specs)))
+  all_buckets = {for name in local.all_bucket_names : name => merge(try(local.default_buckets[name], {}), try(var.bucket_specs[name], {}))}
 }
+
+#output "all_buckets" {
+#  value = local.all_buckets
+#}
+#output "default_buckets" {
+#  value = local.default_buckets
+#}
+#output "bucket_specs" {
+#  value = var.bucket_specs
+#}
 
 module "bucket" {
   for_each                  = local.all_buckets
