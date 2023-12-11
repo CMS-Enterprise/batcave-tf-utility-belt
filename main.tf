@@ -16,16 +16,6 @@ locals {
   all_buckets = {for name in local.all_bucket_names : name => merge(try(local.default_buckets[name], {}), try(var.bucket_specs[name], {}))}
 }
 
-#output "all_buckets" {
-#  value = local.all_buckets
-#}
-#output "default_buckets" {
-#  value = local.default_buckets
-#}
-#output "bucket_specs" {
-#  value = var.bucket_specs
-#}
-
 module "bucket" {
   for_each                  = local.all_buckets
   source                    = "git::git@github.com:CMS-Enterprise/batcave-tf-buckets.git//.?ref=0.5.0"
