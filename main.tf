@@ -26,3 +26,7 @@ module "bucket" {
   sse_algorithm             = each.value.sse_algorithm
   lifecycle_expiration_days = each.value.lifecycle_expiration_days
 }
+
+module "velero_irsa" {
+  source                    = "git::git@github.com:CMS-Enterprise/batcave-tf-irsa.git//.?ref=1.0.0"  
+}
