@@ -1,3 +1,13 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 4.61.0"
+    }
+  }
+  required_version = ">= 1.2"
+}
+
 locals {
   default_parameters = {
     bucket_name_override      = ""
@@ -8,12 +18,12 @@ locals {
     lifecycle_expiration_days = null
   }
   default_buckets = {
-    loki   = merge(local.default_parameters, {bucket_name_override = "${var.cluster_name}-logs"})
-    thanos = merge(local.default_parameters, {bucket_name_override = "batcave-${var.cluster_name}-thanos"})
-    velero = merge(local.default_parameters, {bucket_name_override = "${var.cluster_name}-batcave-velero-storage"})
+    loki   = merge(local.default_parameters, { bucket_name_override = "${var.cluster_name}-logs" })
+    thanos = merge(local.default_parameters, { bucket_name_override = "batcave-${var.cluster_name}-thanos" })
+    velero = merge(local.default_parameters, { bucket_name_override = "${var.cluster_name}-batcave-velero-storage" })
   }
   all_bucket_names = toset(concat(keys(local.default_buckets), keys(var.bucket_specs)))
-  all_buckets = {for name in local.all_bucket_names : name => merge(try(local.default_buckets[name], {}), try(var.bucket_specs[name], {}))}
+  all_buckets      = { for name in local.all_bucket_names : name => merge(try(local.default_buckets[name], {}), try(var.bucket_specs[name], {})) }
 }
 
 module "bucket" {
