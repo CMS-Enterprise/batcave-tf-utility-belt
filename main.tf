@@ -29,4 +29,8 @@ module "bucket" {
 
 module "velero_irsa" {
   source                    = "git::git@github.com:CMS-Enterprise/batcave-tf-irsa.git//.?ref=1.0.0"  
+  name        = var.role_name
+  path        = var.role_path
+  permissions_boundary  = var.role_permissions_boundary_arn
+  oidc_provider   = var.oidc_providers
 }

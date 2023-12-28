@@ -20,3 +20,7 @@ variable "tags" {
   type    = map(any)
   default = {}
 }
+variable "velero_irsa_specs" {
+  type = map(any)
+  default = {}
+}
